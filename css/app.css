@@ -81,6 +81,12 @@ h1 {
     font-size: 33px;
 }
 
+.deck .card.nomatch {
+  cursor: default;
+  background: #d61e1b;
+  font-size: 33px;
+}
+
 /*
  * Styles for the Score Panel
  */

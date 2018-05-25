@@ -51,9 +51,10 @@ var cardDeck = document.querySelectorAll('.card');
 cardDeck.forEach(function(cardItem) {
   cardItem.addEventListener('click', function showCard() {
     cardItem.classList.add('show', 'open');
+    openedCards.push(this);
   });
 });
-
+console.log(openedCards);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)

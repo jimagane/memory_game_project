@@ -1,7 +1,39 @@
 /*
  * Create a list that holds all of your cards
  */
+var allCards = [
+  "fa-diamond",
+  "fa-diamond",
+  "fa-paper-plane-o",
+  "fa-paper-plane-o",
+  "fa-bomb",
+  "fa-bomb",
+  "fa-bolt",
+  "fa-bolt",
+  "fa-anchor",
+  "fa-anchor",
+  "fa-bicycle",
+  "fa-bicycle",
+  "fa-cube",
+  "fa-cube",
+  "fa-leaf",
+  "fa-leaf"
+];
 
+var openedCards = [];
+
+var matchedCards = [];
+
+function gameSetup(){
+  var allCardsHTML = allCards.map(function(card){
+    return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+  });
+  var deck = document.querySelector('.deck');
+  deck.innerHTML = allCardsHTML.join('');
+}
+
+
+gameSetup();
 
 /*
  * Display the cards on the page

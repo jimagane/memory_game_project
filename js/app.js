@@ -28,6 +28,7 @@ function gameSetup(){
   var allCardsHTML = allCards.map(function(card){
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
   });
+  shuffle(allCardsHTML);
   var deck = document.querySelector('.deck');
   deck.innerHTML = allCardsHTML.join('');
 }

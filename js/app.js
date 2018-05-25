@@ -45,16 +45,26 @@ function gameSetup() {
 
 gameSetup();
 
-
+function checkMatch() {
+  var flipCount = openedCards.length/2;
+  if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
+  console.log('match');
+  }
+}
 
 var cardDeck = document.querySelectorAll('.card');
 cardDeck.forEach(function(cardItem) {
   cardItem.addEventListener('click', function showCard() {
     cardItem.classList.add('show', 'open');
     openedCards.push(this);
+    checkMatch();
+    console.log(openedCards.length);
   });
 });
-console.log(openedCards);
+
+////need to unallow if card has already been clicked to add to list!!!!!!!
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -65,27 +75,3 @@ console.log(openedCards);
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-function checkMatch(){
-  if (listCardsOpen.length===2 && listCardsOpen[0]===listCardsOpen[1]){
-    alert('match!');
-    listCardsOpen.pop();
-    listCardsOpen.pop();
-  }
-  else if (listCardsOpen.length===2){
-    alert('no');
-    listCardsOpen.pop();
-    listCardsOpen.pop();
-  }
-  else {
-  }
-}
-
-
-function showCard(){
-  $(this).toggleClass("open");
-  $(this).toggleClass("show");
-  listCardsOpen.push(this.value);
-  checkMatch();
-}
-
-$('.card').on('click', showCard);

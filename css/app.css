@@ -82,9 +82,9 @@ h1 {
 }
 
 .deck .card.nomatch {
-  cursor: default;
-  background: #d61e1b;
-  font-size: 33px;
+    cursor: default;
+    background: #d61e1b;
+    font-size: 33px;
 }
 
 /*

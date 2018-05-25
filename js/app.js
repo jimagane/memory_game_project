@@ -65,3 +65,27 @@ console.log(openedCards);
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+function checkMatch(){
+  if (listCardsOpen.length===2 && listCardsOpen[0]===listCardsOpen[1]){
+    alert('match!');
+    listCardsOpen.pop();
+    listCardsOpen.pop();
+  }
+  else if (listCardsOpen.length===2){
+    alert('no');
+    listCardsOpen.pop();
+    listCardsOpen.pop();
+  }
+  else {
+  }
+}
+
+
+function showCard(){
+  $(this).toggleClass("open");
+  $(this).toggleClass("show");
+  listCardsOpen.push(this.value);
+  checkMatch();
+}
+
+$('.card').on('click', showCard);

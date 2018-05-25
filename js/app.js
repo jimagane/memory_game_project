@@ -1,6 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
 var allCards = [
   "fa-diamond",
   "fa-diamond",
@@ -24,7 +21,20 @@ var openedCards = [];
 
 var matchedCards = [];
 
-function gameSetup(){
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+}
+
+function gameSetup() {
   var allCardsHTML = allCards.map(function(card){
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
   });
@@ -33,31 +43,16 @@ function gameSetup(){
   deck.innerHTML = allCardsHTML.join('');
 }
 
-
 gameSetup();
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
-
+var cardDeck = document.querySelectorAll('.card');
+cardDeck.forEach(function(cardItem) {
+  cardItem.addEventListener('click', function showCard() {
+    cardItem.classList.add('show', 'open');
+  });
+});
 
 /*
  * set up the event listener for a card. If a card is clicked:

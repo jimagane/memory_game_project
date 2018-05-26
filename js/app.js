@@ -48,6 +48,8 @@ gameSetup();
 function checkMatch() {
   var flipCount = openedCards.length/2;
   if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
+    openedCards[2*flipCount-2].classList.add('match');
+    openedCards[2*flipCount-1].classList.add('match');
   console.log('match');
   }
 }
@@ -56,11 +58,12 @@ var cardDeck = document.querySelectorAll('.card');
 cardDeck.forEach(function(cardItem) {
   cardItem.addEventListener('click', function showCard() {
     cardItem.classList.add('show', 'open');
-    openedCards.push(this);
+    openedCards.push(cardItem);
     checkMatch();
-    console.log(openedCards.length);
   });
+  console.log(cardItem.classList);
 });
+
 
 ////need to unallow if card has already been clicked to add to list!!!!!!!
 

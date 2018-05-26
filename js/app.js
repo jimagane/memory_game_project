@@ -50,7 +50,17 @@ function checkMatch() {
   if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
     openedCards[2*flipCount-2].classList.add('match');
     openedCards[2*flipCount-1].classList.add('match');
+  
   console.log('match');
+  }
+  else if (flipCount%1===0) {
+    openedCards[2*flipCount-2].classList.add('nomatch');
+    openedCards[2*flipCount-1].classList.add('nomatch');
+    setTimeout(function resetCard() {
+      openedCards[2*flipCount-2].classList.remove('nomatch', 'show', 'open');
+      openedCards[2*flipCount-1].classList.remove('nomatch', 'show', 'open');
+    }, 1000);
+
   }
 }
 

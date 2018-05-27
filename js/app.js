@@ -61,8 +61,10 @@ flipCount = openedCards.length/2;
         Star rating:
         Total time:
         Would you like to play again?`)
+        buildDeck();
+        cardGame();
       }
-    }, 1000);
+    }, 800);
 
   }
   else if (flipCount%1===0) {

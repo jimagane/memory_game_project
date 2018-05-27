@@ -69,6 +69,7 @@ function checkMatch() {
         openedCards = [];
         matchedCards = [];
         countLog.innerText = 0;
+        numStars[0,1,2].classList.add('fa-star');
       }
     }, 800);
   }
@@ -81,7 +82,7 @@ function checkMatch() {
     }, 700);
   }
 }
-
+var numStars = document.querySelectorAll('.star');
 function cardGame() {
   var cards = document.querySelectorAll('.card');
     cards.forEach(function(cardTarget) {
@@ -97,8 +98,8 @@ function cardGame() {
           if (flipCount%1===0) {
             countLog.innerText = flipCount;
           }
-          var numStars = document.querySelectorAll('.star');
-          if (flipCount>16) {
+
+          if (flipCount>2) {
             numStars[2].classList.remove('fa-star');
           }
           if (flipCount>24) {
@@ -115,6 +116,7 @@ resetButton.addEventListener('click', function reset() {
   countLog.innerText = 0;
   buildDeck();
   cardGame();
+  numStars[0,1,2].classList.add('fa-star');
   });
 cardGame();
 

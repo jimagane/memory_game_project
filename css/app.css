@@ -93,8 +93,10 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 75%;
     margin-bottom: 10px;
+    display: wrap;
+    flex-wrap: wrap;
 }
 
 .score-panel .stars {
@@ -118,4 +120,17 @@ h1 {
     padding: 0.8em;
     padding-left: 1em;
     padding-right: 1em;
+}
+
+.gametime {
+    float: left;
+    width: 80%;
+}
+
+.stars {
+    width: 10%;
+}
+
+.moves {
+    padding: 0.5em;
 }

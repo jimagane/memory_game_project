@@ -99,7 +99,7 @@ function cardGame() {
             countLog.innerText = flipCount;
           }
 
-          if (flipCount>2) {
+          if (flipCount>16) {
             numStars[2].classList.remove('fa-star');
           }
           if (flipCount>24) {
@@ -119,6 +119,19 @@ resetButton.addEventListener('click', function reset() {
   numStars[0,1,2].classList.add('fa-star');
   });
 cardGame();
+
+
+var today = new Date();
+var startTime = today.getTime();
+setInterval(function() {var today = new Date();
+var currentTime = today.getTime();
+var timePassed = currentTime-startTime;
+var timeclock = document.querySelector('.gametime');
+timeclock.innerText = timePassed/1000;
+console.log(timePassed)}, 1000);
+
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:

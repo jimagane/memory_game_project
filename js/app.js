@@ -21,6 +21,8 @@ var openedCards = [];
 
 var matchedCards = [];
 
+let flipCount = openedCards.length/2;
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -34,23 +36,23 @@ function shuffle(array) {
     return array;
 }
 
-function gameSetup() {
-  var allCardsHTML = allCards.map(function(card){
-    return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+function buildDeck() {
+  var allCardsHTML = allCards.map(function(cardIdentity){
+    return `<li class="card" data-card="${cardIdentity}"><i class="fa ${cardIdentity}"></i></li>`;
   });
   shuffle(allCardsHTML);
   var deck = document.querySelector('.deck');
   deck.innerHTML = allCardsHTML.join('');
 }
 
-gameSetup();
+buildDeck();
 
 function checkMatch() {
-  var flipCount = openedCards.length/2;
+flipCount = openedCards.length/2;
   if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
     openedCards[2*flipCount-2].classList.add('match');
     openedCards[2*flipCount-1].classList.add('match');
-  
+
   console.log('match');
   }
   else if (flipCount%1===0) {
@@ -60,23 +62,27 @@ function checkMatch() {
       openedCards[2*flipCount-2].classList.remove('nomatch', 'show', 'open');
       openedCards[2*flipCount-1].classList.remove('nomatch', 'show', 'open');
     }, 1000);
-
   }
 }
 
-var cardDeck = document.querySelectorAll('.card');
-cardDeck.forEach(function(cardItem) {
-  cardItem.addEventListener('click', function showCard() {
-    cardItem.classList.add('show', 'open');
-    openedCards.push(cardItem);
-    checkMatch();
-  });
-  console.log(cardItem.classList);
-});
+function cardGame() {
+    var cards = document.querySelectorAll('.card');
+      cards.forEach(function(cardTarget) {
+          cardTarget.addEventListener('click', function showCard() {
+            if (!cardTarget.classList.contains('show')) {
+              cardTarget.classList.add('show', 'open');
+              openedCards.push(cardTarget);
+              checkMatch();
+            }
+            else {
+              console.log('already clicked');
+            }
+            console.log(flipCount);
 
-
-////need to unallow if card has already been clicked to add to list!!!!!!!
-
+          });
+      });
+}
+cardGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:

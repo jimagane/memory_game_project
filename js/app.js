@@ -52,8 +52,18 @@ flipCount = openedCards.length/2;
   if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
     openedCards[2*flipCount-2].classList.add('match');
     openedCards[2*flipCount-1].classList.add('match');
+    matchedCards.push(openedCards[2*flipCount-2]);
+    matchedCards.push(openedCards[2*flipCount-1]);
+    setTimeout(function win (){
+      if (matchedCards.length===16) {
+        alert (`Congratulations...you won the game!!
+        # of moves: ${flipCount}
+        Star rating:
+        Total time:
+        Would you like to play again?`)
+      }
+    }, 1000);
 
-  console.log('match');
   }
   else if (flipCount%1===0) {
     openedCards[2*flipCount-2].classList.add('nomatch');
@@ -61,7 +71,7 @@ flipCount = openedCards.length/2;
     setTimeout(function resetCard() {
       openedCards[2*flipCount-2].classList.remove('nomatch', 'show', 'open');
       openedCards[2*flipCount-1].classList.remove('nomatch', 'show', 'open');
-    }, 1000);
+    }, 700);
   }
 }
 

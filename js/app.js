@@ -23,6 +23,8 @@ var matchedCards = [];
 
 let flipCount = openedCards.length/2;
 
+var countLog = document.querySelector('.moves');
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -43,6 +45,7 @@ function buildDeck() {
   shuffle(allCardsHTML);
   var deck = document.querySelector('.deck');
   deck.innerHTML = allCardsHTML.join('');
+
 }
 
 buildDeck();
@@ -91,8 +94,11 @@ function cardGame() {
             else {
               console.log('already clicked');
             }
-            console.log(flipCount);
 
+
+            if (flipCount%1===0) {
+              countLog.innerText = flipCount;
+            }
           });
       });
 }
@@ -101,6 +107,7 @@ var resetButton = document.querySelector('.restart');
 resetButton.addEventListener('click', function reset(){
   openedCards = [];
   matchedCards = [];
+  countLog.innerText = 0;
   buildDeck();
   cardGame();
   });

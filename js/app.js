@@ -45,13 +45,12 @@ function buildDeck() {
   shuffle(allCardsHTML);
   var deck = document.querySelector('.deck');
   deck.innerHTML = allCardsHTML.join('');
-
 }
 
 buildDeck();
 
 function checkMatch() {
-flipCount = openedCards.length/2;
+  flipCount = openedCards.length/2;
   if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
     openedCards[2*flipCount-2].classList.add('match');
     openedCards[2*flipCount-1].classList.add('match');
@@ -68,7 +67,6 @@ flipCount = openedCards.length/2;
         cardGame();
       }
     }, 800);
-
   }
   else if (flipCount%1===0) {
     openedCards[2*flipCount-2].classList.add('nomatch');
@@ -81,30 +79,33 @@ flipCount = openedCards.length/2;
 }
 
 function cardGame() {
-
-
-    var cards = document.querySelectorAll('.card');
-      cards.forEach(function(cardTarget) {
-          cardTarget.addEventListener('click', function showCard() {
-            if (!cardTarget.classList.contains('show')) {
-              cardTarget.classList.add('show', 'open');
-              openedCards.push(cardTarget);
-              checkMatch();
-            }
-            else {
-              console.log('already clicked');
-            }
-
-
-            if (flipCount%1===0) {
-              countLog.innerText = flipCount;
-            }
-          });
-      });
+  var cards = document.querySelectorAll('.card');
+    cards.forEach(function(cardTarget) {
+        cardTarget.addEventListener('click', function showCard() {
+          if (!cardTarget.classList.contains('show')) {
+            cardTarget.classList.add('show', 'open');
+            openedCards.push(cardTarget);
+            checkMatch();
+          }
+          else {
+            console.log('already clicked');
+          }
+          if (flipCount%1===0) {
+            countLog.innerText = flipCount;
+          }
+          var numStars = document.querySelectorAll('.star');
+          if (flipCount>12) {
+            numStars[2].classList.remove('fa-star');
+          }
+          if (flipCount>24) {
+            numStars[1].classList.remove('fa-star');
+          }
+        });
+    });
 }
 
 var resetButton = document.querySelector('.restart');
-resetButton.addEventListener('click', function reset(){
+resetButton.addEventListener('click', function reset() {
   openedCards = [];
   matchedCards = [];
   countLog.innerText = 0;

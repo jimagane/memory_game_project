@@ -58,13 +58,17 @@ function checkMatch() {
     matchedCards.push(openedCards[2*flipCount-1]);
     setTimeout(function win (){
       if (matchedCards.length===16) {
+        var stars = document.querySelectorAll('.fa-star');
         alert (`Congratulations...you won the game!!
         # of moves: ${flipCount}
-        Star rating:
+        Star rating: ${stars.length}/3
         Total time:
         Would you like to play again?`)
         buildDeck();
         cardGame();
+        openedCards = [];
+        matchedCards = [];
+        countLog.innerText = 0;
       }
     }, 800);
   }
@@ -94,7 +98,7 @@ function cardGame() {
             countLog.innerText = flipCount;
           }
           var numStars = document.querySelectorAll('.star');
-          if (flipCount>12) {
+          if (flipCount>16) {
             numStars[2].classList.remove('fa-star');
           }
           if (flipCount>24) {

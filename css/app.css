@@ -113,3 +113,9 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.restart {
+    padding: 0.8em;
+    padding-left: 1em;
+    padding-right: 1em;
+}

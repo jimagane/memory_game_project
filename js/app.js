@@ -78,6 +78,8 @@ flipCount = openedCards.length/2;
 }
 
 function cardGame() {
+
+
     var cards = document.querySelectorAll('.card');
       cards.forEach(function(cardTarget) {
           cardTarget.addEventListener('click', function showCard() {
@@ -94,6 +96,14 @@ function cardGame() {
           });
       });
 }
+
+var resetButton = document.querySelector('.restart');
+resetButton.addEventListener('click', function reset(){
+  openedCards = [];
+  matchedCards = [];
+  buildDeck();
+  cardGame();
+  });
 cardGame();
 
 /*

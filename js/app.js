@@ -61,7 +61,7 @@ flipCount = openedCards.length/2;
     setTimeout(function resetCard() {
       openedCards[2*flipCount-2].classList.remove('nomatch', 'show', 'open');
       openedCards[2*flipCount-1].classList.remove('nomatch', 'show', 'open');
-    }, 1000);
+    }, 700);
   }
 }
 

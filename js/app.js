@@ -23,6 +23,8 @@ var matchedCards = [];
 
 let flipCount = openedCards.length/2;
 
+var countLog = document.querySelector('.moves');
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -48,12 +50,31 @@ function buildDeck() {
 buildDeck();
 
 function checkMatch() {
-flipCount = openedCards.length/2;
+  flipCount = openedCards.length/2;
   if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
     openedCards[2*flipCount-2].classList.add('match');
     openedCards[2*flipCount-1].classList.add('match');
-
-  console.log('match');
+    matchedCards.push(openedCards[2*flipCount-2]);
+    matchedCards.push(openedCards[2*flipCount-1]);
+    setTimeout(function win (){
+      if (matchedCards.length===16) {
+        var stars = document.querySelectorAll('.fa-star');
+        stopTime();
+        alert (`Congratulations...you won the game!!
+        # of moves: ${flipCount}
+        Star rating: ${stars.length}/3
+        Total time: ${totalTime}
+        Would you like to play again?`)
+        timeclock.innerText = '0:00';
+        buildDeck();
+        cardGame();
+        openedCards = [];
+        matchedCards = [];
+        countLog.innerText = 0;
+        numStars[2].classList.add('fa-star');
+        numStars[1].classList.add('fa-star');
+      }
+    }, 700);
   }
   else if (flipCount%1===0) {
     openedCards[2*flipCount-2].classList.add('nomatch');
@@ -64,25 +85,76 @@ flipCount = openedCards.length/2;
     }, 700);
   }
 }
-
+var numStars = document.querySelectorAll('.star');
 function cardGame() {
-    var cards = document.querySelectorAll('.card');
-      cards.forEach(function(cardTarget) {
-          cardTarget.addEventListener('click', function showCard() {
-            if (!cardTarget.classList.contains('show')) {
-              cardTarget.classList.add('show', 'open');
-              openedCards.push(cardTarget);
-              checkMatch();
+  var cards = document.querySelectorAll('.card');
+    cards.forEach(function(cardTarget) {
+        cardTarget.addEventListener('click', function showCard() {
+          var x ;
+          x = document.querySelector('.nomatch');
+          console.log(x);
+          if (!cardTarget.classList.contains('show') && x==null) {
+            cardTarget.classList.add('show', 'open');
+            openedCards.push(cardTarget);
+            if (openedCards.length===1) {
+              showTime();
             }
-            else {
-              console.log('already clicked');
-            }
-            console.log(flipCount);
+            checkMatch();
+          }
+          else {
+            console.log('already clicked');
+          }
+          if (flipCount%1===0) {
+            countLog.innerText = flipCount;
+          }
 
-          });
-      });
+          if (flipCount>16) {
+            numStars[2].classList.remove('fa-star');
+          }
+          if (flipCount>24) {
+            numStars[1].classList.remove('fa-star');
+          }
+        });
+    });
 }
+
+var resetButton = document.querySelector('.restart');
+resetButton.addEventListener('click', function reset() {
+  openedCards = [];
+  matchedCards = [];
+  countLog.innerText = 0;
+  buildDeck();
+  cardGame();
+  numStars[2].classList.add('fa-star');
+  numStars[1].classList.add('fa-star');
+  stopTime();
+  timeclock.innerText = '0:00';
+  });
 cardGame();
+var tt;
+var timeclock = document.querySelector('.gametime');
+function showTime(){
+  var today = new Date();
+  var startTime = today.getTime();
+  tt = setInterval(function() {
+    var today = new Date();
+    var currentTime = today.getTime();
+    var timePassed = ((currentTime-startTime)/1000).toFixed(0);
+
+    var minutes = Math.floor(timePassed/60);
+    var seconds = timePassed - minutes*60;
+    if (seconds<10) {var sec = '0'+seconds}
+    else {sec = seconds}
+    timeclock.innerText = minutes+':'+sec;
+  },1000);
+}
+
+function stopTime(){
+  clearInterval(tt);
+  totalTime = document.querySelector('.gametime').innerText;
+}
+
+var totalTime;
 
 /*
  * set up the event listener for a card. If a card is clicked:

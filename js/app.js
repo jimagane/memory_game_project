@@ -25,6 +25,14 @@ let flipCount = openedCards.length/2;
 
 var countLog = document.querySelector('.moves');
 
+var numStars = document.querySelectorAll('.star');
+
+var resetButton = document.querySelector('.restart');
+
+var timeclock = document.querySelector('.gametime');
+
+var totalTime, timeRun;
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -38,8 +46,60 @@ function shuffle(array) {
     return array;
 }
 
+function showTime() {
+  var today = new Date();
+  var startTime = today.getTime();
+  timeRun = setInterval(function() {
+    var today = new Date();
+    var currentTime = today.getTime();
+    var timePassed = ((currentTime-startTime)/1000).toFixed(0);
+    var minutes = Math.floor(timePassed/60);
+    var seconds = timePassed - minutes*60;
+    if (seconds<10) {
+      var sec = '0'+seconds;
+    }
+    else {
+      sec = seconds;
+    }
+    timeclock.innerText = minutes+':'+sec;
+  }, 1000);
+}
+
+function stopTime() {
+  clearInterval(timeRun);
+  totalTime = document.querySelector('.gametime').innerText;
+}
+
+// Resets timer, move counter, star rating, clears and reshuffles deck
+function restartGame() {
+  stopTime();
+  timeclock.innerText = '0:00';
+  countLog.innerText = 0;
+  numStars[2].classList.add('fa-star');
+  numStars[1].classList.add('fa-star');
+  openedCards = [];
+  matchedCards = [];
+  buildDeck();
+  cardGame();
+}
+
+// Displays modal for winning the game
+function win () {
+  if (matchedCards.length === 16) {
+    var stars = document.querySelectorAll('.fa-star');
+    stopTime();
+    alert (`Congratulations...you won the game!!
+    # of moves: ${flipCount}
+    Star rating: ${stars.length}/3
+    Total time: ${totalTime}
+    Would you like to play again?`)
+    restartGame();
+  }
+}
+
+// Builds each card html, shuffle order, and adds to deck
 function buildDeck() {
-  var allCardsHTML = allCards.map(function(cardIdentity){
+  var allCardsHTML = allCards.map(function(cardIdentity) {
     return `<li class="card" data-card="${cardIdentity}"><i class="fa ${cardIdentity}"></i></li>`;
   });
   shuffle(allCardsHTML);
@@ -47,36 +107,17 @@ function buildDeck() {
   deck.innerHTML = allCardsHTML.join('');
 }
 
-buildDeck();
-
+// Check for card match every 2 flips. if match will change to green and check for win. if no match will change to red and reset cards.
 function checkMatch() {
   flipCount = openedCards.length/2;
-  if (flipCount%1===0 && openedCards[2*flipCount-2].dataset.card===openedCards[2*flipCount-1].dataset.card) {
+  if (flipCount%1 === 0 && openedCards[2*flipCount-2].dataset.card === openedCards[2*flipCount-1].dataset.card) {
     openedCards[2*flipCount-2].classList.add('match');
     openedCards[2*flipCount-1].classList.add('match');
     matchedCards.push(openedCards[2*flipCount-2]);
     matchedCards.push(openedCards[2*flipCount-1]);
-    setTimeout(function win (){
-      if (matchedCards.length===16) {
-        var stars = document.querySelectorAll('.fa-star');
-        stopTime();
-        alert (`Congratulations...you won the game!!
-        # of moves: ${flipCount}
-        Star rating: ${stars.length}/3
-        Total time: ${totalTime}
-        Would you like to play again?`)
-        timeclock.innerText = '0:00';
-        buildDeck();
-        cardGame();
-        openedCards = [];
-        matchedCards = [];
-        countLog.innerText = 0;
-        numStars[2].classList.add('fa-star');
-        numStars[1].classList.add('fa-star');
-      }
-    }, 700);
+    setTimeout(win, 700);
   }
-  else if (flipCount%1===0) {
+  else if (flipCount%1 === 0) {
     openedCards[2*flipCount-2].classList.add('nomatch');
     openedCards[2*flipCount-1].classList.add('nomatch');
     setTimeout(function resetCard() {
@@ -85,84 +126,37 @@ function checkMatch() {
     }, 700);
   }
 }
-var numStars = document.querySelectorAll('.star');
+
+/*
+ * Listens for card to be clicked and will show cards and start game timer.
+ * also updates move counter every 2 card flips and updates star rating
+ */
 function cardGame() {
   var cards = document.querySelectorAll('.card');
     cards.forEach(function(cardTarget) {
         cardTarget.addEventListener('click', function showCard() {
-          var x ;
-          x = document.querySelector('.nomatch');
-
-          if (!cardTarget.classList.contains('show') && x==null) {
+          var noMatch = document.querySelector('.nomatch');
+          if (!cardTarget.classList.contains('show') && noMatch == null) {
             cardTarget.classList.add('show', 'open');
             openedCards.push(cardTarget);
-            if (openedCards.length===1) {
+            if (openedCards.length === 1) {
               showTime();
             }
             checkMatch();
           }
-          else {
-            
-          }
-          if (flipCount%1===0) {
+          if (flipCount%1 === 0) {
             countLog.innerText = flipCount;
           }
-
-          if (flipCount>16) {
+          if (flipCount > 16) {
             numStars[2].classList.remove('fa-star');
           }
-          if (flipCount>24) {
+          if (flipCount > 24) {
             numStars[1].classList.remove('fa-star');
           }
         });
     });
 }
 
-var resetButton = document.querySelector('.restart');
-resetButton.addEventListener('click', function reset() {
-  openedCards = [];
-  matchedCards = [];
-  countLog.innerText = 0;
-  buildDeck();
-  cardGame();
-  numStars[2].classList.add('fa-star');
-  numStars[1].classList.add('fa-star');
-  stopTime();
-  timeclock.innerText = '0:00';
-  });
+buildDeck();
 cardGame();
-var tt;
-var timeclock = document.querySelector('.gametime');
-function showTime(){
-  var today = new Date();
-  var startTime = today.getTime();
-  tt = setInterval(function() {
-    var today = new Date();
-    var currentTime = today.getTime();
-    var timePassed = ((currentTime-startTime)/1000).toFixed(0);
-
-    var minutes = Math.floor(timePassed/60);
-    var seconds = timePassed - minutes*60;
-    if (seconds<10) {var sec = '0'+seconds}
-    else {sec = seconds}
-    timeclock.innerText = minutes+':'+sec;
-  },1000);
-}
-
-function stopTime(){
-  clearInterval(tt);
-  totalTime = document.querySelector('.gametime').innerText;
-}
-
-var totalTime;
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+resetButton.addEventListener('click', restartGame);

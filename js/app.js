@@ -59,10 +59,11 @@ function checkMatch() {
     setTimeout(function win (){
       if (matchedCards.length===16) {
         var stars = document.querySelectorAll('.fa-star');
+        stopTime();
         alert (`Congratulations...you won the game!!
         # of moves: ${flipCount}
         Star rating: ${stars.length}/3
-        Total time:
+        Total time: ${totalTime}
         Would you like to play again?`)
         buildDeck();
         cardGame();
@@ -120,28 +121,33 @@ resetButton.addEventListener('click', function reset() {
   buildDeck();
   cardGame();
   numStars[0,1,2].classList.add('fa-star');
+  stopTime();
   showTime();
   });
 cardGame();
-
+var tt;
 function showTime(){
   var today = new Date();
   var startTime = today.getTime();
-  setInterval(function() {var today = new Date();
-  var currentTime = today.getTime();
-  var timePassed = ((currentTime-startTime)/1000).toFixed(0);
-  var timeclock = document.querySelector('.gametime');
-  var minutes = Math.floor(timePassed/60);
-  var seconds = timePassed - minutes*60;
-  if (seconds<10) {var sec = '0'+seconds}
-  else {sec = seconds}
-  timeclock.innerText = minutes+':'+sec;
+  tt = setInterval(function() {
+    var today = new Date();
+    var currentTime = today.getTime();
+    var timePassed = ((currentTime-startTime)/1000).toFixed(0);
+    var timeclock = document.querySelector('.gametime');
+    var minutes = Math.floor(timePassed/60);
+    var seconds = timePassed - minutes*60;
+    if (seconds<10) {var sec = '0'+seconds}
+    else {sec = seconds}
+    timeclock.innerText = minutes+':'+sec;
   },1000);
 }
 
+function stopTime(){
+  clearInterval(tt);
+  totalTime = document.querySelector('.gametime').innerText;
+}
 
-
-
+var totalTime;
 
 /*
  * set up the event listener for a card. If a card is clicked:

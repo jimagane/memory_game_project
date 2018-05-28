@@ -65,6 +65,7 @@ function checkMatch() {
         Star rating: ${stars.length}/3
         Total time: ${totalTime}
         Would you like to play again?`)
+        timeclock.innerText = '0:00';
         buildDeck();
         cardGame();
         openedCards = [];
@@ -88,7 +89,10 @@ function cardGame() {
   var cards = document.querySelectorAll('.card');
     cards.forEach(function(cardTarget) {
         cardTarget.addEventListener('click', function showCard() {
-          if (!cardTarget.classList.contains('show')) {
+          var x ;
+          x = document.querySelector('.nomatch');
+          console.log(x);
+          if (!cardTarget.classList.contains('show') && x==null) {
             cardTarget.classList.add('show', 'open');
             openedCards.push(cardTarget);
             if (openedCards.length===1) {
@@ -122,10 +126,11 @@ resetButton.addEventListener('click', function reset() {
   cardGame();
   numStars[0,1,2].classList.add('fa-star');
   stopTime();
-  showTime();
+  timeclock.innerText = '0:00';
   });
 cardGame();
 var tt;
+var timeclock = document.querySelector('.gametime');
 function showTime(){
   var today = new Date();
   var startTime = today.getTime();
@@ -133,7 +138,7 @@ function showTime(){
     var today = new Date();
     var currentTime = today.getTime();
     var timePassed = ((currentTime-startTime)/1000).toFixed(0);
-    var timeclock = document.querySelector('.gametime');
+
     var minutes = Math.floor(timePassed/60);
     var seconds = timePassed - minutes*60;
     if (seconds<10) {var sec = '0'+seconds}

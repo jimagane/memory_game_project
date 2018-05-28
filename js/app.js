@@ -21,7 +21,7 @@ var openedCards = [];
 
 var matchedCards = [];
 
-let flipCount = openedCards.length/2;
+var flipCount = openedCards.length/2;
 
 var countLog = document.querySelector('.moves');
 

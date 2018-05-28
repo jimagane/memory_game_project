@@ -71,9 +71,10 @@ function checkMatch() {
         openedCards = [];
         matchedCards = [];
         countLog.innerText = 0;
-        numStars[0,1,2].classList.add('fa-star');
+        numStars[2].classList.add('fa-star');
+        numStars[1].classList.add('fa-star');
       }
-    }, 800);
+    }, 700);
   }
   else if (flipCount%1===0) {
     openedCards[2*flipCount-2].classList.add('nomatch');
@@ -124,7 +125,8 @@ resetButton.addEventListener('click', function reset() {
   countLog.innerText = 0;
   buildDeck();
   cardGame();
-  numStars[0,1,2].classList.add('fa-star');
+  numStars[2].classList.add('fa-star');
+  numStars[1].classList.add('fa-star');
   stopTime();
   timeclock.innerText = '0:00';
   });

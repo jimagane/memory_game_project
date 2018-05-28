@@ -92,7 +92,7 @@ function cardGame() {
         cardTarget.addEventListener('click', function showCard() {
           var x ;
           x = document.querySelector('.nomatch');
-          console.log(x);
+
           if (!cardTarget.classList.contains('show') && x==null) {
             cardTarget.classList.add('show', 'open');
             openedCards.push(cardTarget);
@@ -102,7 +102,7 @@ function cardGame() {
             checkMatch();
           }
           else {
-            console.log('already clicked');
+            
           }
           if (flipCount%1===0) {
             countLog.innerText = flipCount;

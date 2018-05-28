@@ -90,6 +90,9 @@ function cardGame() {
           if (!cardTarget.classList.contains('show')) {
             cardTarget.classList.add('show', 'open');
             openedCards.push(cardTarget);
+            if (openedCards.length===1) {
+              showTime();
+            }
             checkMatch();
           }
           else {
@@ -117,18 +120,25 @@ resetButton.addEventListener('click', function reset() {
   buildDeck();
   cardGame();
   numStars[0,1,2].classList.add('fa-star');
+  showTime();
   });
 cardGame();
 
+function showTime(){
+  var today = new Date();
+  var startTime = today.getTime();
+  setInterval(function() {var today = new Date();
+  var currentTime = today.getTime();
+  var timePassed = ((currentTime-startTime)/1000).toFixed(0);
+  var timeclock = document.querySelector('.gametime');
+  var minutes = Math.floor(timePassed/60);
+  var seconds = timePassed - minutes*60;
+  if (seconds<10) {var sec = '0'+seconds}
+  else {sec = seconds}
+  timeclock.innerText = minutes+':'+sec;
+  },1000);
+}
 
-var today = new Date();
-var startTime = today.getTime();
-setInterval(function() {var today = new Date();
-var currentTime = today.getTime();
-var timePassed = currentTime-startTime;
-var timeclock = document.querySelector('.gametime');
-timeclock.innerText = timePassed/1000;
-console.log(timePassed)}, 1000);
 
 
 

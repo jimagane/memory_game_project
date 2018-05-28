@@ -1,0 +1,77 @@
+@media screen and (max-width: 690px) {
+  .deck {
+    width: 95%;
+  }
+
+  .score-panel {
+    width: 95%;
+  }
+
+  .stars {
+    width: 20%;
+  }
+
+
+}
+
+@media screen and (min-width: 591px) and (max-width: 645px){
+  .deck .card {
+    height: 110px;
+    width: 110px;
+  }
+}
+
+@media screen and (min-width: 541px) and (max-width: 590px){
+  .deck .card {
+    height: 100px;
+    width: 100px;
+  }
+
+  .deck {
+    min-height: 600px;
+  }
+}
+
+@media screen and (min-width: 486px) and (max-width: 540px){
+  .deck .card {
+    height: 90px;
+    width: 90px;
+  }
+
+  .deck {
+    min-height: 590px;
+  }
+}
+
+@media screen and (min-width: 436px) and (max-width: 485px){
+  .deck .card {
+    height: 80px;
+    width: 80px;
+  }
+
+  .deck {
+    min-height: 540px;
+  }
+}
+
+@media screen and (min-width: 381px) and (max-width: 435px){
+  .deck .card {
+    height: 70px;
+    width: 70px;
+  }
+
+  .deck {
+    min-height: 520px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .deck .card {
+    height: 60px;
+    width: 60px;
+  }
+
+  .deck {
+    min-height: 500px;
+  }
+}
